@@ -1,2 +1,342 @@
 <!-- ENG: Pagination example with Vue.js -->
 <!-- ESP: Ejemplo de paginación con Vue.js -->
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, maximum-scale=1.0, minimum-scale=1.0" />
+</head>
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+<style>
+ .active-test {
+        background: #00aeef;
+    }
+	
+</style>
+
+<div id="app">
+  <h1>begintest</h1>
+<nav>
+<ul class="pagination pagination-lg">
+<li>
+<a v-on:click="first" aria-label="Previous">
+<span aria-hidden="true">&laquo;</span>
+</a>
+</li>
+
+<li>
+<a v-on:click="previous" aria-label="Previous">
+<span aria-hidden="true">&lt;</span>
+</a>
+</li>
+
+
+<li v-bind:class="{ 'active': boton == paginaActual }" v-for="(boton, index) in testF(2)"><a  v-on:click="cambiar(boton )">{{boton}}</a></li>
+
+<li>
+<a aria-label="Next" v-on:click="next">
+<span aria-hidden="true">&gt;</span>
+</a>
+</li>
+
+<li>
+<a aria-label="Next" v-on:click="last">
+<span aria-hidden="true">&raquo;</span>
+</a>
+</li>
+</ul>
+</nav>
+<h1>endtest</h1>
+
+
+<nav>
+<ul class="pagination">
+<li>
+<a v-on:click="first" aria-label="Previous">
+<span aria-hidden="true">&laquo;</span>
+</a>
+</li>
+
+<li>
+<a aria-label="Next" v-on:click="previous">
+<span aria-hidden="true">❮</span>
+</a>
+</li>
+
+<li class="mob" v-bind:class="{ 'active': boton == paginaActual }" v-for="(boton, index) in numeroBotVis"><a  v-on:click="cambiar(boton )">{{boton}}</a></li>
+
+<li>
+<a aria-label="Next" v-on:click="next">
+<span aria-hidden="true">&raquo;</span>
+</a>
+</li>
+<li>
+<a aria-label="Next" v-on:click="last">
+<span aria-hidden="true">&raquo;</span>
+</a>
+</li>
+</ul>
+</nav>
+
+<!-- <div v-for="(elemento) in listaFiltrada"> -->
+<div v-for="(elemento) in listaFiltrada">
+<div class="panel panel-default">
+    <div class="panel-body">{{ elemento }}</div>
+  </div>
+
+</div>
+<nav>
+<ul class="pagination">
+<li>
+<a href="#" v-on:click="first" aria-label="Previous">
+<span aria-hidden="true">&laquo;</span>
+</a>
+</li>
+
+<li v-bind:class="{ 'active': boton == paginaActual }" v-for="(boton, index) in numeroBotVis"><a  v-on:click="cambiar(boton )">{{boton}}</a></li>
+
+<li>
+<a href="#" aria-label="Next" v-on:click="last">
+<span aria-hidden="true">&raquo;</span>
+</a>
+</li>
+</ul>
+</nav>
+
+<div v-show="this.listRes.length > 0" style="display: inline-block;">
+	<button v-on:click="first">first</button>
+	<button v-on:click="previous">previous</button>
+	
+	<!-- <div v-for="(boton, index) in numeroBotones"> -->
+	
+	<!-- <button v-on:click="cambiar(index )">{{index + 1}}</button> -->
+	<button v-for="boton in numeroBotVis" v-on:click="cambiar(boton )" v-bind:class="{ 'active-test': boton == paginaActual }">{{boton}}</button> 
+		
+	
+	<button v-on:click="next">next</button>
+	<button v-on:click="last">last</button>
+	
+</div>
+<br>
+<br>
+<div v-show="this.listRes.length > 0">
+	<div><button v-on:click="previous">previous</button>
+	</div>
+	<!-- <div v-for="(boton, index) in numeroBotones"> -->
+	<div >
+	<!-- <button v-on:click="cambiar(index )">{{index + 1}}</button> -->
+	<button v-on:click="cambiar(paginaActual )" >{{paginaActual}}</button> 
+		
+	</div>
+	<div><button v-on:click="next">next</button>
+	</div>
+</div>
+<h1> {{ this.listRes.length}}   , {{numeroBotones}}  paginaactual{{paginaActual}}</h1>
+
+
+
+<nav>
+<ul class="pagination">
+<li>
+<a v-on:click="first" aria-label="Previous">
+<span aria-hidden="true">&laquo;</span>
+</a>
+</li>
+
+<li v-bind:class="{ 'active': boton == paginaActual }" v-for="(boton, index) in numeroBotVis"><a  v-on:click="cambiar(boton )">{{boton}}</a></li>
+
+<li>
+<a aria-label="Next" v-on:click="last">
+<span aria-hidden="true">&raquo;</span>
+</a>
+</li>
+</ul>
+</nav>
+
+</div>
+
+<script>
+new Vue({
+  el: '#app',
+  data: {
+    selected: '',
+	
+	cantidad: 10,
+	paginaActual: 1,
+	botonesVisibles: 4,
+	listRes: [
+			'Aguamarina', 
+			'Albaricoque', 
+			'Amaranto', 
+			'Amarillo', 
+			'mbar', 
+			'Ail', 
+			'Argn', 
+			'Azul', 
+			'Beis', 
+			'Blanco', 
+			'Borgoa', 
+			'Caqui', 
+			'Carmes', 
+			'Carmn', 
+			'Carnacin', 
+			'Celeste', 
+			'Cerleo', 
+			'Chartreuse', 
+			'Cian', 
+			'Cinzolino', 
+			'Coral', 
+			'Crudo', 
+			'Escarlata', 
+			'Esmeralda', 
+			'Fucsia', 
+			'Gamboge', 
+			'Granate', 
+			'Gris', 
+			'Jade', 
+			'Lavanda', 
+			'Leonado', 
+			'Lila', 
+			'Magenta', 
+			'Malva', 
+			'Marrn', 
+			'Naranja', 
+			'Negro', 
+			'Ocre', 
+			'Oro', 
+			'Prpura', 
+			'Rojo', 
+			'Rosa', 
+			'Salmn', 
+			'Sepia', 
+
+			'Turquesa', 
+			'Turqui', 
+			'Verde', 
+			'Violeta', 
+			'Zafiro'
+			]
+  },
+  computed:{
+	listaFiltrada: function(){
+		
+		return this.listRes.slice((this.paginaActual - 1) * this.cantidad, ((this.paginaActual - 1)* this.cantidad)+ this.cantidad );
+	},
+	numeroBotones: function(){
+	var temp = Math.ceil(this.listRes.length / this.cantidad);
+		return temp;
+	},
+	numeroBotVis:function(){
+		console.log("numeroBotVis computed");
+		if(this.botonesVisibles >= this.numeroBotones){
+			 var tempSmall = [];
+			 var x = 1;
+			 for(x; x <= this.numeroBotones; x++){
+			
+				tempSmall.push(x);
+			
+			}
+			return tempSmall;
+		}
+		var tempIn = Math.floor(this.botonesVisibles/ 2);
+		var i = this.paginaActual - tempIn;
+		var j = this.paginaActual + tempIn;
+		
+		if(i <= 1){
+			i = 1;
+			j = this.botonesVisibles;
+		}
+		if( j > this.numeroBotones){
+			i = this.numeroBotones - this.botonesVisibles + 1;
+			j = this.numeroBotones;
+		}
+		
+		var smallList = [];
+		
+		var contTemp = 1;
+		for(i; i <= j; i++){
+			if(contTemp > this.botonesVisibles){
+				break;
+			}
+			smallList.push(i);
+			contTemp ++;
+		}
+		return smallList;
+	}
+  },
+  methods:{
+	cambiar: function(paginaNueva){
+	//alert(paginaNueva);
+		this.paginaActual = paginaNueva ;
+		
+	},
+	next: function(){
+		if(this.paginaActual == this.numeroBotones) return;
+		this.paginaActual = this.paginaActual +1;
+	},
+	previous: function(){
+	if(this.paginaActual == 1) return;
+	this.paginaActual = this.paginaActual -1;
+	},
+	first: function(){
+		
+		this.paginaActual = 1;
+	},
+	last: function(){
+	
+	this.paginaActual = this.numeroBotones;
+	},
+	
+	testF:function(botonesVisibles){
+	console.log("TestF not computed");
+		if(botonesVisibles >= this.numeroBotones){
+			 var tempSmall = [];
+			 var x = 1;
+			 for(x; x <= this.numeroBotones; x++){
+			
+				tempSmall.push(x);
+			
+			}
+			return tempSmall;
+		}
+		var tempIn = Math.floor(botonesVisibles/ 2);
+		var i = this.paginaActual - tempIn;
+		var j = this.paginaActual + tempIn;
+		
+		if(i <= 1){
+			i = 1;
+			j = botonesVisibles;
+		}
+		if( j > this.numeroBotones){
+			i = this.numeroBotones - botonesVisibles + 1;
+			j = this.numeroBotones;
+		}
+		
+		var smallList = [];
+		
+		var contTemp = 1;
+		for(i; i <= j; i++){
+			if(contTemp > botonesVisibles){
+				break;
+			}
+			smallList.push(i);
+			contTemp ++;
+		}
+		
+		//if(smallList.length == 2){
+		//	if(smallList[1] == this.paginaActual && smallList[1] != this.numeroBotones){
+		//		smallList[0] = smallList[0] + 1;
+		//		smallList[1] = smallList[1] + 1;
+		//	}
+		//	
+		//	
+		//	
+		//}
+		
+		return smallList;
+	}
+	
+  }
+})
+</script>
